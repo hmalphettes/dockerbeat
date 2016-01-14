@@ -1,9 +1,10 @@
 package main
 
 import (
-	"github.com/elastic/libbeat/common"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/elastic/beats/libbeat/common"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestCPUperCpuUsage(t *testing.T) {

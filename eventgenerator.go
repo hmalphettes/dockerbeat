@@ -1,9 +1,10 @@
 package main
 
 import (
-	"github.com/elastic/libbeat/common"
-	"github.com/fsouza/go-dockerclient"
 	"time"
+
+	"github.com/elastic/beats/libbeat/common"
+	"github.com/fsouza/go-dockerclient"
 )
 
 type EventGenerator struct {
@@ -32,7 +33,7 @@ func (d *EventGenerator) getContainerEvent(container *docker.APIContainers, stat
 	return event
 }
 
-func (d *EventGenerator) getCpuEvent(container *docker.APIContainers, stats *docker.Stats) common.MapStr {
+func (d *EventGenerator) getCPUEvent(container *docker.APIContainers, stats *docker.Stats) common.MapStr {
 
 	calculator := CPUCalculator{
 		CPUData{stats.PreCPUStats.CPUUsage.PercpuUsage, stats.PreCPUStats.CPUUsage.TotalUsage, stats.PreCPUStats.CPUUsage.UsageInKernelmode, stats.PreCPUStats.CPUUsage.UsageInUsermode},
@@ -56,16 +57,20 @@ func (d *EventGenerator) getCpuEvent(container *docker.APIContainers, stats *doc
 }
 
 func (d *EventGenerator) getNetworkEvent(container *docker.APIContainers, stats *docker.Stats) common.MapStr {
-	newNetworkData := NetworkData{
-		stats.Read,
-		stats.Network.RxBytes,
-		stats.Network.RxDropped,
-		stats.Network.RxErrors,
-		stats.Network.RxPackets,
-		stats.Network.TxBytes,
-		stats.Network.TxDropped,
-		stats.Network.TxErrors,
-		stats.Network.TxPackets,
+	//
+	var newNetworkData NetworkData
+	for _, network := range stats.Networks {
+		newNetworkData = NetworkData{
+			stats.Read,
+			network.RxBytes,
+			network.RxDropped,
+			network.RxErrors,
+			network.RxPackets,
+			network.TxBytes,
+			network.TxDropped,
+			network.TxErrors,
+			network.TxPackets,
+		}
 	}
 
 	var event common.MapStr

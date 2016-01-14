@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/elastic/libbeat/common"
 	"strconv"
+
+	"github.com/elastic/beats/libbeat/common"
 )
 
 type CPUData struct {

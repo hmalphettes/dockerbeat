@@ -3,11 +3,11 @@ package main
 import (
 	"time"
 
-	"github.com/elastic/libbeat/beat"
-	"github.com/elastic/libbeat/cfgfile"
-	"github.com/elastic/libbeat/common"
-	"github.com/elastic/libbeat/logp"
-	"github.com/elastic/libbeat/publisher"
+	"github.com/elastic/beats/libbeat/beat"
+	"github.com/elastic/beats/libbeat/cfgfile"
+	"github.com/elastic/beats/libbeat/common"
+	"github.com/elastic/beats/libbeat/logp"
+	"github.com/elastic/beats/libbeat/publisher"
 	"github.com/fsouza/go-dockerclient"
 )
 
@@ -115,7 +115,7 @@ func (d *Dockerbeat) exportContainerStats(container docker.APIContainers) error 
 
 		events := []common.MapStr{
 			d.eventGenerator.getContainerEvent(&container, stats),
-			d.eventGenerator.getCpuEvent(&container, stats),
+			d.eventGenerator.getCPUEvent(&container, stats),
 			d.eventGenerator.getMemoryEvent(&container, stats),
 			d.eventGenerator.getNetworkEvent(&container, stats),
 		}

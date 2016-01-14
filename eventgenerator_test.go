@@ -1,12 +1,13 @@
 package main
 
 import (
-	"github.com/elastic/libbeat/common"
+	"testing"
+	"time"
+
+	"github.com/elastic/beats/libbeat/common"
 	"github.com/fsouza/go-dockerclient"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
-	"testing"
-	"time"
 )
 
 type MockedStats struct {
